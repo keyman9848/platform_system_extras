@@ -41,8 +41,9 @@ if [ -z $SIZE ]; then
     SIZE=128M
 fi
 
-echo "make_ext4fs -l $SIZE -a $MOUNT_POINT $OUTPUT_FILE $SRC_DIR"
-make_ext4fs -s -l $SIZE -a $MOUNT_POINT $OUTPUT_FILE $SRC_DIR
+cmd="make_ext4fs -l $SIZE -a $MOUNT_POINT $OUTPUT_FILE $SRC_DIR"
+echo ${cmd}
+${cmd}
 if [ $? -ne 0 ]; then
   exit 4
 fi
