@@ -558,7 +558,7 @@ int main(int argc, char *argv[])
     // Allow genyd to bypass SuperUser
     char genyd_su_bypass[PROPERTY_VALUE_MAX];
     property_get("genyd.su.bypass", genyd_su_bypass, "");
-    if (strlen(androVM_su_prop) == 1 && *genyd_su_bypass == "1") {
+    if (strlen(genyd_su_bypass) == 1 && *genyd_su_bypass == '1') {
         LOGI("Bypass SuperUser");
         allow(&ctx);
     }
