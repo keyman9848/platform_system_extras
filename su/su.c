@@ -550,17 +550,17 @@ int main(int argc, char *argv[])
     }
     ctx.to.optind = optind;
 
-    su_ctx = &ctx;
-    if (from_init(&ctx.from) < 0) {
-        deny(&ctx);
-    }
-
     // Allow genyd to bypass SuperUser
     char genyd_su_bypass[PROPERTY_VALUE_MAX];
     property_get("genyd.su.bypass", genyd_su_bypass, "");
     if (strlen(genyd_su_bypass) == 1 && *genyd_su_bypass == '1') {
         LOGI("Bypass SuperUser");
         allow(&ctx);
+    }
+
+    su_ctx = &ctx;
+    if (from_init(&ctx.from) < 0) {
+        deny(&ctx);
     }
 
     if (access_disabled(&ctx.from))
