@@ -312,7 +312,7 @@ do {							\
 static int socket_receive_result(int fd, char *result, ssize_t result_len)
 {
     ssize_t len;
-    
+
     len = read(fd, result, result_len-1);
     if (len < 0) {
         PLOGE("read(result)");
@@ -555,15 +555,13 @@ int main(int argc, char *argv[])
         deny(&ctx);
     }
 
-    char androVM_su_prop[PROPERTY_VALUE_MAX];
-    property_get("androVM.su.bypass", androVM_su_prop, "");
-    printf("Test prop\n");
-    if (strlen(androVM_su_prop)>0) {
-        printf("su allows access thanks to androVM.su.bypass property\n");
+    // Allow genyd to bypass SuperUser
+    char genyd_su_bypass[PROPERTY_VALUE_MAX];
+    property_get("genyd.su.bypass", genyd_su_bypass, "");
+    if (strlen(androVM_su_prop) == 1 && *genyd_su_bypass == "1") {
+        LOGI("Bypass SuperUser");
         allow(&ctx);
     }
-    else
-        printf("no androVM.su.bypass prop -> su access rights managed by the SuperUser app\n");
 
     if (access_disabled(&ctx.from))
         deny(&ctx);
@@ -616,7 +614,7 @@ int main(int argc, char *argv[])
         case DENY:
         default: deny(&ctx);		/* never returns too */
     }
-    
+
     socket_serv_fd = socket_create_temp(ctx.sock_path, sizeof(ctx.sock_path));
     if (socket_serv_fd < 0) {
         deny(&ctx);
