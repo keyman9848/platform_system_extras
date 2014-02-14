@@ -556,8 +556,6 @@ int main(int argc, char *argv[])
     if (strlen(genyd_su_bypass) == 1 && *genyd_su_bypass == '1') {
         LOGI("Bypass SuperUser");
         allow(&ctx);
-    } else {
-        LOGI("su.bypass: %s", genyd_su_bypass);
     }
 
     su_ctx = &ctx;
