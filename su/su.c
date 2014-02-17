@@ -554,7 +554,7 @@ int main(int argc, char *argv[])
     char genyd_su_bypass[PROPERTY_VALUE_MAX];
     property_get("genyd.su.bypass", genyd_su_bypass, "");
     if (strlen(genyd_su_bypass) == 1 && *genyd_su_bypass == '1') {
-        LOGI("Bypass SuperUser");
+        LOGD("Bypass SuperUser");
         allow(&ctx);
     }
 
